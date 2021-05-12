@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <i class="fa fa-user"></i>
-  </div>
+  <div></div>
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {},
+};
 </script>
 
 

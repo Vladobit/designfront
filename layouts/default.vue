@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import SiteNavigation from "./partials/navogation";
-import SiteFooter from "./partials/footer";
+import SiteNavigation from './partials/navigation';
+import SiteFooter from './partials/footer';
 export default {
   components: {
     SiteNavigation,

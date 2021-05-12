@@ -1,37 +1,21 @@
 <template>
   <section class="authentication">
     <div class="auth-body">
-      <h1 class="text-uppercase fw-500 mb-4 text-center font-22">Register</h1>
+      <h1 class="text-uppercase fw-500 mb-4 text-center font-22">
+        Reset Password
+      </h1>
       <form class="auth-form" @submit.prevent="submit">
         <alert-success :form="form">
-          We have send you an email to activate your account
+          {{ status }}
+          <p>
+            <nuxt-link to="/login">Proceed to login</nuxt-link>
+          </p>
         </alert-success>
         <div class="form-group">
           <input
             type="text"
-            name="name"
-            v-model.trim="form.name"
-            class="form-control form-control-lg font-14 fw-300"
-            :class="{ 'is-invalid': form.errors.has('name') }"
-            placeholder="Full Name"
-          />
-          <has-error :form="form" field="name"></has-error>
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            name="username"
-            v-model.trim="form.username"
-            class="form-control form-control-lg font-14 fw-300"
-            :class="{ 'is-invalid': form.errors.has('username') }"
-            placeholder="Username"
-          />
-          <has-error :form="form" field="username"></has-error>
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
             name="email"
+            readonly
             v-model.trim="form.email"
             class="form-control form-control-lg font-14 fw-300"
             :class="{ 'is-invalid': form.errors.has('email') }"
@@ -39,6 +23,7 @@
           />
           <has-error :form="form" field="email"></has-error>
         </div>
+
         <div class="form-group">
           <input
             type="password"
@@ -46,17 +31,18 @@
             v-model.trim="form.password"
             class="form-control form-control-lg font-14 fw-300"
             :class="{ 'is-invalid': form.errors.has('password') }"
-            placeholder="Password"
+            placeholder="New Password"
           />
           <has-error :form="form" field="password"></has-error>
         </div>
+
         <div class="form-group">
           <input
             type="password"
-            name="password_confirmation"
+            name="password"
             v-model.trim="form.password_confirmation"
             class="form-control form-control-lg font-14 fw-300"
-            placeholder="Confirm Password"
+            placeholder="Confirm New Password"
           />
         </div>
 
@@ -70,15 +56,9 @@
               <i class="fas fa-spinner fa-spin"></i>
             </span>
 
-            Register
+            Reset Password
           </button>
         </div>
-        <p class="font-14 fw-400 text-center mt-4">
-          Already have an account?
-          <nuxt-link :to="{ name: 'login' }" class="color-blue">
-            Login</nuxt-link
-          >
-        </p>
       </form>
     </div>
   </section>
@@ -86,31 +66,37 @@
 
 <script>
 export default {
+  // middleware: ['guest'],
   data() {
     return {
+      status: '',
       form: this.$vform({
-        username: '',
-        name: '',
         email: '',
         password: '',
         password_confirmation: '',
+        token: '',
       }),
     };
   },
   methods: {
     submit() {
       this.form
-        .post(`/register`)
+        .post('/password/reset')
         .then((res) => {
+          this.status = res.data.status;
           this.form.reset();
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((e) => {
+          console.log(e);
         });
     },
+  },
+  created() {
+    //we get from mail
+    this.form.email = this.$route.query.email;
+    this.form.token = this.$route.params.token;
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

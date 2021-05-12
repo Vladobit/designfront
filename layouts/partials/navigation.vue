@@ -1,13 +1,7 @@
 <template>
   <header class="fixed-topx">
     <nav class="navbar navbar-expand-lg navbar-dark align-items-center">
-      <nuxt-link
-        :to="{ name: 'index' }"
-        class="navbar-brand text-uppercase fw-500"
-        href="#"
-        title="Project Name"
-        >DesignHouse</nuxt-link
-      >
+      <a href="/" class="navbar-brand text-uppercase fw-500">DesignHouse</a>
       <button
         class="navbar-toggler mr-auto"
         type="button"
@@ -21,15 +15,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav font-14 fw-300">
-          <li class="nav-item active">
-            <a class="nav-link" href="#" title="Shots">Designs</a>
+          <li class="nav-item">
+            <a href="/designs" class="nav-link">Designs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" title="Designers"> Designers </a>
+            <a class="nav-link" href="#" title="Designers">Designers</a>
           </li>
         </ul>
         <div class="header-search">
-          <form action="" method="">
+          <form action method>
             <div class="form-group">
               <input
                 type="text"
@@ -39,7 +33,7 @@
                 placeholder="Search and hit enter..."
               />
               <div class="search-icon text-white">
-                <i class="fa fa-search"></i>
+                <i class="fas fa-search"></i>
               </div>
             </div>
           </form>
@@ -47,7 +41,7 @@
         <div
           class="upload-shot white-path font-14 fw-500 text-uppercase mr-auto"
         >
-          <a href="#" class="primary-bg-color text-white">
+          <a href="/upload" class="primary-bg-color text-white">
             <i class="fas fa-cloud-upload-alt"></i> Upload
           </a>
         </div>
@@ -57,17 +51,16 @@
       <template v-if="!$auth.loggedIn">
         <ul class="before-login font-14 fw-300 text-uppercase">
           <li>
-            <nuxt-link :to="{ name: 'register' }">Sign Up</nuxt-link>
+            <a href="/register">Sign Up</a>
           </li>
           <li>
-            <nuxt-link :to="{ name: 'login' }">Login</nuxt-link>
+            <a href="/login">Login</a>
           </li>
         </ul>
       </template>
       <!-- End Before Login -->
 
       <!-- After Login -->
-
       <template v-else>
         <ul class="author-page white-path">
           <!-- Profile Dropdown -->
@@ -81,10 +74,14 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img class="user-thumb" src="~assets/images/profile.png" />
+              <img class="user-thumb" :src="$auth.user.photo_url" />
               <div class="usr-info">
-                <span class="user-name font-14 fw-500">John Doe</span>
-                <span class="user-deg font-10 fw-300">Sr. UI Designer</span>
+                <span class="user-name font-14 fw-500">
+                  {{ $auth.user.name }}
+                </span>
+                <span class="user-deg font-10 fw-300">
+                  {{ $auth.user.tagline }}
+                </span>
                 <span class="down-chevron">
                   <i class="fa fa-angle-down"></i>
                 </span>
@@ -97,7 +94,11 @@
               <div class="dropdown-title-group font-12 fw-500">
                 <span class="dropdown-title text-uppercase">Your Account</span>
               </div>
-              <a class="dropdown-item mt-28" href="#" title="Profile">
+              <nuxt-link to="/settings/dashboard" class="dropdown-item mt-28">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+              </nuxt-link>
+              <a class="dropdown-item" href="#" title="Profile">
                 <i class="fa fa-user"></i>
                 Profile
               </a>
@@ -106,7 +107,7 @@
                 Setting
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" title="Sign Out">
+              <a class="dropdown-item" href="#" @click.prevent="logout">
                 <i class="fa fa-lock"></i>
                 Sign Out
               </a>
@@ -121,8 +122,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logout() {
+      this.$auth.logout();
+    },
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>
