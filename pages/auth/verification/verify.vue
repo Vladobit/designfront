@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  // middleware: ["guest"],
+  middleware: ['guest'],
   async asyncData({ params, query, app }) {
     const q = await Object.keys(query)
       .map((k) => `${k}=${query[k]}`)

@@ -7,29 +7,16 @@
       <form class="auth-form" @submit.prevent="submit">
         <alert-success :form="form">{{ status }}</alert-success>
         <div class="form-group">
-          <input
-            type="text"
-            name="email"
-            v-model.trim="form.email"
-            class="form-control form-control-lg font-14 fw-300"
-            :class="{ 'is-invalid': form.errors.has('email') }"
+          <base-input
+            :form="form"
+            field="email"
+            v-model="form.email"
             placeholder="Email"
-          />
-          <has-error :form="form" field="email"></has-error>
+          ></base-input>
         </div>
 
         <div class="text-right">
-          <button
-            type="submit"
-            :disabled="form.busy"
-            class="btn btn-primary primary-bg-color font-16 fw-500 text-uppercase"
-          >
-            <span v-if="form.busy">
-              <i class="fas fa-spinner fa-spin"></i>
-            </span>
-
-            Sent Reset Link
-          </button>
+          <base-button :loading="form.busy"> Sent Reset Link</base-button>
         </div>
         <p class="font-14 fw-400 text-center mt-4">
           <nuxt-link :to="{ name: 'login' }" class="color-blue">
@@ -43,7 +30,7 @@
 
 <script>
 export default {
-  // middleware: ['guest'],
+  middleware: ['guest'],
   data() {
     return {
       status: '',

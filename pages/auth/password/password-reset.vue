@@ -12,52 +12,36 @@
           </p>
         </alert-success>
         <div class="form-group">
-          <input
-            type="text"
-            name="email"
-            readonly
-            v-model.trim="form.email"
-            class="form-control form-control-lg font-14 fw-300"
-            :class="{ 'is-invalid': form.errors.has('email') }"
+          <base-input
+            :form="form"
+            field="email"
+            v-model="form.email"
             placeholder="Email"
-          />
-          <has-error :form="form" field="email"></has-error>
+          ></base-input>
         </div>
 
         <div class="form-group">
-          <input
-            type="password"
-            name="password"
-            v-model.trim="form.password"
-            class="form-control form-control-lg font-14 fw-300"
-            :class="{ 'is-invalid': form.errors.has('password') }"
-            placeholder="New Password"
-          />
-          <has-error :form="form" field="password"></has-error>
+          <base-input
+            :form="form"
+            field="password"
+            inputType="password"
+            v-model="form.password"
+            placeholder="Password"
+          ></base-input>
         </div>
 
         <div class="form-group">
-          <input
-            type="password"
-            name="password"
-            v-model.trim="form.password_confirmation"
-            class="form-control form-control-lg font-14 fw-300"
+          <base-input
+            :form="form"
+            field="password_confirmation"
+            inputType="password"
+            v-model="form.password_confirmation"
             placeholder="Confirm New Password"
-          />
+          ></base-input>
         </div>
 
         <div class="text-right">
-          <button
-            type="submit"
-            :disabled="form.busy"
-            class="btn btn-primary primary-bg-color font-16 fw-500 text-uppercase"
-          >
-            <span v-if="form.busy">
-              <i class="fas fa-spinner fa-spin"></i>
-            </span>
-
-            Reset Password
-          </button>
+          <base-button :loading="form.busy"> Reset Password</base-button>
         </div>
       </form>
     </div>
@@ -66,7 +50,7 @@
 
 <script>
 export default {
-  // middleware: ['guest'],
+  middleware: ['guest'],
   data() {
     return {
       status: '',
